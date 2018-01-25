@@ -4,5 +4,16 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates :first_name, presence: true, length: { maximum: 50 }
+  validates :last_name, presence: true, length: {maximum: 50}
+  validates :phone_number,:presence => true,
+                 :numericality => true,
+                 :length => { :minimum => 10, :maximum => 15 },
+                 uniqueness:
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, format: { with: VALID_EMAIL_REGEX },
+                    uniqueness: { case_sensitive: false }
+  validates :city, presence: true, length: { maximum:50 }
+
   has_many :bookings
 end
