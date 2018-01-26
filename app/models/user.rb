@@ -16,4 +16,8 @@ class User < ApplicationRecord
   validates :city, presence: true, length: { maximum:50 }
 
   has_many :bookings
+
+  enum role: { customer: 0, cleaner: 1 }
+  ROLES = User.roles.map { |r,| [I18n.t("roles.#{r}"), r] }.sort_by { |r| I18n.t("roles.#{r}") }
+
 end

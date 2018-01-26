@@ -43,7 +43,7 @@
 
   <div class="field">
     <%= f.label :role %><br />
-    <%= f.select :role, ['customer', 'cleaner']%>
+    <%= f.select :role, User::ROLES, { selected: @user.role }, { class: "form-control" } %>
   </div>
 
   <div class="actions">
