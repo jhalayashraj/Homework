@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     if resource.role == 'customer'
       bookings_path
     else
-      cleaner_path
+      bookings_path
     end
   end
 

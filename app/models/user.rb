@@ -15,7 +15,8 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: true }
   validates :city, presence: true, length: { maximum:50 }
 
-  has_many :bookings
+  has_many :customer_bookings, foreign_key: :customer_id, class_name: 'Booking'
+  has_many :cleaner_bookings, foreign_key: :cleaner_id, class_name: 'Booking'
 
   enum role: { customer: 0, cleaner: 1 }
   ROLES = User.roles.map { |r,| [I18n.t("roles.#{r}"), r] }.sort_by { |r| I18n.t("roles.#{r}") }

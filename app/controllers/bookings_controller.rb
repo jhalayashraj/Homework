@@ -5,7 +5,7 @@ class BookingsController < ApplicationController
   # GET /bookings
   # GET /bookings.json
   def index
-    @bookings = current_user.bookings.all
+    @bookings = current_user.customer_bookings
     puts "    #{session}"
   end
 
@@ -16,7 +16,7 @@ class BookingsController < ApplicationController
 
   # GET /bookings/new
   def new
-    @booking = current_user.bookings.new
+    @booking = current_user.customer_bookings.new
   end
 
   # GET /bookings/1/edit
@@ -26,11 +26,12 @@ class BookingsController < ApplicationController
   # POST /bookings
   # POST /bookings.json
   def create
-    @booking = current_user.bookings.new(booking_params)
-
+    @booking = current_user.customer_bookings.new(booking_params)
+    cleaners = User.cleaner.where(city: 'Gandhinagar').where.not(id: Booking.where('DATE(date_and_time) = ?', Date.today).pluck(:cleaner_id))
+    @booking.cleaner = cleaners.first
     respond_to do |format|
       if @booking.save
-        format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
+        format.html { redirect_to bookings_path, notice: 'Booking was successfully created.' }
         format.json { render :show, status: :created, location: @booking }
       else
         format.html { render :new }
@@ -66,7 +67,7 @@ class BookingsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_booking
-      @booking = current_user.bookings.find(params[:id])
+      @booking = current_user.customer_bookings.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
