@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates :phone_number,:presence => true,
                  :numericality => true,
                  :length => { :minimum => 10, :maximum => 15 },
-                 uniqueness:
+                 uniqueness: true, on: :create
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, format: { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
