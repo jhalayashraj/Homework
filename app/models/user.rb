@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :last_name, presence: true, length: {maximum: 50}
   validates :phone_number,:presence => true,
                  :numericality => true,
-                 :length => { :minimum => 10, :maximum => 15 },
+                 :length => { is: 10 },
                  uniqueness: true, on: :create
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, format: { with: VALID_EMAIL_REGEX },
